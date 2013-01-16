@@ -1,0 +1,49 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Marilyn Grace</title>
+	
+	<meta name="title" content="Marilyn Grace" />
+	<meta name="description" content="Marilyn Grace" />
+	<meta name="keywords" content="Marilyn Grace" />
+	
+	<link rel="stylesheet" href="http://yui.yahooapis.com/2.8.2r1/build/reset/reset-min.css" type="text/css" />
+	<link rel="stylesheet" href="css/screen.css" type="text/css" />
+</head>
+<body>
+	
+	<div id="global" itemscope itemtype="http://data-vocabulary.org/Organization">
+		<h1 itemprop="name">Marilyn Grace</h1>
+		<p class="address" itemprop="address" itemscope itemtype="http://data-vocabulary.org/Address">
+		  <span itemprop="street-address">PO Box 356 </span>,
+		  <span itemprop="locality">New South Wales</span>,
+		  <span itemprop="region">Woollahra</span>,
+		  <span itemprop="postal-code">1350</span>.
+		  <span itemprop="country-name">Australia</span>.
+		</p>
+		
+		<p class="tel" itemprop="tel">+61 402 852 411</p>
+		<p class="email" itemprop="email"><a href="mailto:info@marilyngrace.com.au">info@marilyngrace.com.au</a></p>
+		
+		<p class="coming-soon">Coming Soon</p>
+	</div>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('h1').hide();
+			$('p').hide();
+								 
+			$('h1').delay(200).fadeIn(500);
+			
+			$('p.address').delay(700).fadeIn(500);
+			$('p.tel').delay(700).fadeIn(500);
+			$('p.email').delay(700).fadeIn(500);
+
+			$('p.coming-soon').delay(1500).fadeIn(500);
+		});
+	</script>
+</body>
+</html>

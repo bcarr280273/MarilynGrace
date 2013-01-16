@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Marilyn Grace - Gallery</title>
+
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery.lightbox-0.5.css" />
+<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="css/ie6.css" />
+<![endif]-->
+<style type="text/css">
+
+
+#content-wrap #content
+{
+	left    : 50px;
+	top		: 46px;
+	width	: 800px;
+}
+
+#content-wrap #content h2
+{
+	background  : transparent url('img/titles.png') no-repeat 0 -55px;
+	height      : 31px;
+}
+
+#gallery
+{
+	position    : relative;
+	height      : 398px;
+}
+
+	#gallery a
+	{
+		text-decoration: none;
+		display: inline;
+		margin: 0 4px 4px 0;
+	}
+
+	#gallery-navigation
+	{
+		height: 13px;
+		position: relative;
+		margin-top  : 15px;
+		/*border-bottom: 1px solid #181818;*/
+	}
+
+	#next
+	{
+		background  : transparent url('img/pagination.png') no-repeat 0 0;
+		bottom		: 5px;
+		height      : 13px;
+		position    : absolute;
+		right       : 12px;
+		text-indent : -9999px;
+		width       : 37px;
+	}
+	
+	#next:hover
+	{
+		background-position : 0 -14px;
+	}
+	
+	#prev
+	{
+		background  : transparent url('img/pagination.png') no-repeat 0 -28px;
+		bottom		: 5px;
+		height      : 13px;
+		left        : 0px;
+		position    : absolute;
+		text-indent : -9999px;
+		width       : 40px;
+	}
+	
+	#prev:hover
+	{
+		background-position : 0 -42px;
+	}
+	
+	#gallery div.set
+	{
+		display: none;
+	}
+	
+	#gallery div.active
+	{
+		display: block;
+	}
+	
+	#gallery-navigation #pagination
+	{
+		position: absolute;
+		right : 62px;
+		padding: 0px 6px 3px 17px;
+		bottom: 0px;
+	}
+	
+		#gallery-navigation #pagination li
+		{
+			display: inline;
+			color	: #fff;
+			cursor	: pointer;
+			text-decoration: none;
+			font-size: 11px;
+			padding-right: 11px;
+			font-weight: bold;
+		}
+		
+		#gallery-navigation #pagination li.active
+		{
+			cursor	: default;
+            font-size: larger;
+		}
+		
+		#gallery-navigation #pagination li:hover
+		{
+			color   : #ccc;
+		}
+
+</style>
+
+</head>
+
+<body>
+	
+	<div id="wrap">
+		
+		<h1><a href="index.html">Marilyn Grace</a></h1>
+		<div id="content-wrap">
+			<div id="content">
+		
+				<h2>Gallery</h2>
+
+				<p>For further information and images on MARILYN GRACE events, please contact <a href="mailto:info@marilyngrace.com.au">info@marilyngrace.com.au</a></p>
+
+				<div id="gallery">
+				   
+				</div>
+				
+				
+				<div id="gallery-navigation">
+					<a href="#" id="prev">prev</a>
+					
+					<ul id="pagination"></ul>
+					
+					<a href="#" id="next">next</a>
+				</div>
+
+			</div>
+		</div>
+		
+		<div id="nav">
+			<ul>
+				<li><a href="whoweare.html">Who we are</a></li>
+				<li><a href="whatwedo.html">What we do</a></li>
+				<li class="active">Gallery</li>
+				<li><a href="contact.html">Contact</a></li>
+				<li><a href="https://twitter.com/#!/marilyngevents">Twitter</a></li>
+				<li><a href="http://marilyngraceevents.blogspot.com.au">Blog</a></li>
+			</ul>
+		</div>
+	
+	</div>
+	
+	<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>-->
+    <!--<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>-->
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.pngFix.pack.js"></script>
+	<script type="text/javascript" src="js/jquery.lightbox-0.5.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript">
+
+     var Arrayfiles;
+
+     $(document).ready(function () {
+
+         function makeGallery() {
+             var imgPerSet = 8;
+             var gallery = $("#gallery");
+
+             var cSetInt = 0;
+             var cSet;
+             var res = new Array();
+             
+             $.ajax({
+                 type: 'GET',
+                 url: 'demo.php',
+                 dataType: 'json',
+                 success: function (data) {
+                     var i = 0;
+                     while (i < data.filesArray.length) {
+                         if (i % imgPerSet == 0) {
+                             cSet = $('<div id="set-' + cSetInt + '" class="set">');
+                             gallery.append(cSet);
+                             cSetInt++;
+                         }
+                         var gItem = $('<a href="img/gallery/' + data.filesArray[i] + '" rel="lightbox[gallery]"><img src="img/gallery/thumbnails/' + data.filesArray[i] + '" width="194" height="194" alt="" /></a>');
+                         cSet.append(gItem);
+                         i++;
+                     }
+                 },
+                 data: {},
+                 async: false
+             });
+         }
+
+         makeGallery();
+
+         var max = $("#gallery .set").length;
+
+
+         var pagination = $("#pagination");
+
+         for (var i = 0; i < max; i++) {
+
+             var a = $('<li />');
+             a.attr('id', 'page-' + i);
+             a.text(String(i + 1));
+             (function (n) {
+                 a.click(function () {
+                     setActive(n);
+                 });
+             })(i);
+
+             pagination.append(a);
+
+         }
+         var isFading = false;
+         function setActive(num) {
+
+             function show() {
+
+                 $("#gallery #set-" + num).fadeIn("slow", "linear", function () {
+                     isFading = false;
+                     $(this).addClass('active');
+                 });
+             }
+             if (!isFading) {
+                 isFading = true;
+                 $("#pagination li").removeClass('active');
+                 $("#pagination #page-" + num).addClass('active');
+                 var curSet = $("#gallery div.active");
+                 if (curSet.length == 0) { show(); } else {
+                     curSet.fadeOut("fast", "linear", function () {
+                         $(this).removeClass('active');
+                         show();
+                     });
+                 }
+             }
+         }
+
+         function changeDirection(dir) {
+             var curSet = $("#gallery div.active");
+             var set = parseInt(curSet.attr('id').split('-')[1]);
+
+             var newSet = set += dir;
+
+             if (newSet > max - 1) {
+                 newSet = 0;
+             } else if (newSet < 0) {
+                 newSet = max - 1;
+             }
+
+             setActive(newSet);
+
+         }
+
+         $("#prev").click(function () { changeDirection(-1) });
+         $("#next").click(function () { changeDirection(+1) });
+
+         $('#gallery a').lightBox();
+
+         setActive(0);
+     });
+	</script>
+	
+	<div id="images"></div>
+	</body>
+
+</html>

@@ -1,0 +1,10 @@
+﻿#content h2, #next, #prev
+{
+	background-image: none !important;
+	text-indent: 0 !important;
+}
+
+#contact #content h2
+{
+	text-align: right;
+}
